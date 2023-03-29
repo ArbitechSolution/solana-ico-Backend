@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
 		password: {
 			type: String,
 		},
-		code: {
+		refCode: {
 			type: String,
 			required: true,
 		},

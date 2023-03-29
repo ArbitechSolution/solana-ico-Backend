@@ -11,12 +11,22 @@ router.all('/register', authController.register);
 router.all('/login', authController.login);
 
 // Send reset code to user's email
-router.all('/reset-code', verifyToken, resetController.sendResetCode);
+router.all('/sendOtp', resetController.sendOtpCode);
 
 // Reset user's password with the code
 router.all('/reset-password', resetController.resetPassword);
-
+//change wallet address
+router.all(
+	'/updateWalletAddress',
+	verifyToken,
+	authController.updateWalletAddress
+);
+//change user details
+router.all('/updateUserDetails', verifyToken, authController.updateUserDetails);
 //get user by email
 router.all('/getUserId', authController.getUserIdByEmail);
+
+//get user info
+router.all('/getUserInfo/:user_id', verifyToken, authController.getUserInfo);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 var bodyParser = require('body-parser');
 const app = express();
+const cronJob = require('./cron');
 app.use(bodyParser.json({ limit: '50mb' }));
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -21,8 +22,10 @@ mongoose.connection.on('open', () => {
 
 	// Routes
 	const authRoutes = require('./routes/auth.routes');
+	const buyRoutes = require('./routes/buy.routes');
 
 	app.use('/api/auth', authRoutes);
+	app.use('/user', buyRoutes);
 
 	// Error handling middleware
 	app.use((err, req, res, next) => {

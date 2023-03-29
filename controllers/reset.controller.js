@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('../services/email.services');
 const OPT = require('../models/OPT.model');
-exports.sendResetCode = async (req, res, next) => {
+exports.sendOtpCode = async (req, res, next) => {
 	try {
-		const { email } = req.body;
-
+		const { email, type } = req.body;
+		let newOPT;
 		// Check if user with given email exists
 		const user = await User.findOne({ email });
 		if (!user) {
@@ -17,7 +17,7 @@ exports.sendResetCode = async (req, res, next) => {
 		}
 
 		// Check if there is an existing code for the same user and type
-		const existingOPT = await OPT.findOne({ userId: user._id, type: 'reset' });
+		const existingOPT = await OPT.findOne({ userId: user._id, type: type });
 
 		// If there is an existing code, update it with a new code and expiry time
 		if (existingOPT) {
@@ -27,10 +27,10 @@ exports.sendResetCode = async (req, res, next) => {
 		}
 		// If there is no existing code, create a new OPT document for the user
 		else {
-			const newOPT = new OPT({
+			newOPT = new OPT({
 				userId: user._id,
 				code: Math.floor(100000 + Math.random() * 900000),
-				type: 'reset',
+				type: type,
 				expiresAt: Date.now() + 3600000, // Code expires in 1 hour
 			});
 			await newOPT.save();
