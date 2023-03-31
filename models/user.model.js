@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema(
 		},
 		refCode: {
 			type: String,
-			required: true,
 		},
 		walletAddress: {
 			type: String,

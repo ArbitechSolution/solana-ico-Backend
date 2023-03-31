@@ -30,6 +30,15 @@ const getRoaCorePriceInKRW = async () => {
 		return null;
 	}
 };
+const getPrice = async (req, res) => {
+	const price = await getRoaCorePriceInKRW();
+	res.status(201).json({
+		status: 'success',
+		message: 'price of token in won',
+		showableMessage: 'price of token in won',
+		price,
+	});
+};
 
 const buyToken = async (req, res) => {
 	try {
@@ -408,4 +417,5 @@ module.exports = {
 	getReferralRewardSummary,
 	withdrawPurchasedToken,
 	withdrawReward,
+	getPrice,
 };

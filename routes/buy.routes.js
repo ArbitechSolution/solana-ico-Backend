@@ -32,5 +32,6 @@ router.all(
 	buyController.withdrawPurchasedToken
 );
 router.all('/withdrawReward', verifyToken, buyController.withdrawReward);
+router.all('/getPrice', buyController.getPrice);
 
 module.exports = router;
