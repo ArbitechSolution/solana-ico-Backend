@@ -23,9 +23,11 @@ mongoose.connection.on('open', () => {
 	// Routes
 	const authRoutes = require('./routes/auth.routes');
 	const buyRoutes = require('./routes/buy.routes');
+	const adminRoutes = require('./routes/admin.routes');
 
 	app.use('/api/auth', authRoutes);
 	app.use('/user', buyRoutes);
+	app.use('/admin', adminRoutes);
 
 	// Error handling middleware
 	app.use((err, req, res, next) => {

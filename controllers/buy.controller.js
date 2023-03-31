@@ -330,7 +330,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		}
 
 		// Update the purchase history status to 4 (withdrawn)
-		purchaseHistory.status = 4;
+		purchaseHistory.status = 3;
 		await purchaseHistory.save();
 
 		// Respond with success message
