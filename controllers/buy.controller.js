@@ -104,9 +104,8 @@ const buyToken = async (req, res) => {
 const getUserPurchaseHistory = async (req, res) => {
 	try {
 		const { user_id } = req.params;
-
 		const userPurchaseHistory = await UserPurchaseHistory.find({
-			userId: user_id,
+			user_id: user_id,
 		});
 
 		if (!userPurchaseHistory) {
@@ -140,7 +139,7 @@ const getReferralCashRewards = async (req, res) => {
 		const { user_id } = req.params;
 
 		const referralCashRewards = await ReferralCashReward.find({
-			userId: user_id,
+			user_id: user_id,
 		}).populate('referredTo', 'fullName -_id');
 
 		if (!referralCashRewards) {
@@ -287,7 +286,6 @@ const getReferralRewardSummary = async (req, res) => {
 const withdrawPurchasedToken = async (req, res, next) => {
 	try {
 		const { user_id, purchaseHistoryId, otp } = req.body;
-
 		// Check if user with given ID exists
 		const user = await User.findById(user_id);
 		if (!user) {
@@ -303,7 +301,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 			code: otp,
 			type: 'withdrawPurchasedToken',
 		});
-		if (!opt || opt.expiresAt < new Date()) {
+		if (!otp || otp.expiresAt < new Date()) {
 			return res.status(400).json({
 				status: 'fail',
 				showableMessage: 'Invalid or expired  code',
