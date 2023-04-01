@@ -12,7 +12,7 @@ exports.sendOtpCode = async (req, res, next) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this email does not exist',
+				showableMessage: '이 이메일을 가진 사용자가 존재하지 않습니다',
 			});
 		}
 
@@ -45,7 +45,7 @@ exports.sendOtpCode = async (req, res, next) => {
 
 		return res.json({
 			status: 'success',
-			showableMessage: 'Reset code sent successfully',
+			showableMessage: '리셋 완료',
 		});
 	} catch (error) {
 		return next(error);
@@ -60,7 +60,7 @@ exports.resetPassword = async (req, res, next) => {
 		if (password !== confirmPassword) {
 			return res
 				.status(400)
-				.json({ status: 'fail', showableMessage: 'Passwords do not match' });
+				.json({ status: 'fail', showableMessage: '비밀번호 불일치' });
 		}
 
 		// Check if user with given email exists
@@ -68,7 +68,7 @@ exports.resetPassword = async (req, res, next) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this ID does not exist',
+				showableMessage: 'ID가 존재하지 않습니다',
 			});
 		}
 
@@ -81,7 +81,7 @@ exports.resetPassword = async (req, res, next) => {
 		if (!opt || opt.expiresAt < new Date()) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Invalid or expired reset code',
+				showableMessage: '유효하지 않거나 만료된 재설정 코드',
 			});
 		}
 
@@ -98,7 +98,7 @@ exports.resetPassword = async (req, res, next) => {
 		// Respond with success message
 		return res.json({
 			status: 'success',
-			showableMessage: 'Password reset successfully',
+			showableMessage: '비밀번호 재설정 성공',
 		});
 	} catch (error) {
 		return next(error);
