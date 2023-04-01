@@ -86,7 +86,7 @@ const buyToken = async (req, res) => {
 		res.status(201).json({
 			status: 'success',
 			message: 'Purchase and referral data saved successfully',
-			showableMessage: 'Your token purchase has been processed successfully.',
+			showableMessage: '토큰 구매가 성공적으로 처리되었습니다',
 			userPurchaseHistory,
 			referralCashReward,
 		});
@@ -95,8 +95,7 @@ const buyToken = async (req, res) => {
 		res.status(500).json({
 			status: 'fail',
 			message: 'An error occurred while saving the purchase and referral data',
-			showableMessage:
-				'An error occurred during the token purchase. Please try again.',
+			showableMessage: '토큰 구매 중 오류가 발생했습니다. 다시 시도해 주세요.',
 			error,
 		});
 	}
@@ -119,7 +118,7 @@ const getUserPurchaseHistory = async (req, res) => {
 		res.status(200).json({
 			status: 'success',
 			message: 'User purchase history retrieved successfully',
-			showableMessage: 'User purchase history has been retrieved.',
+			showableMessage: '사용자 구매 내역이 검색되었습니다.',
 			userPurchaseHistory,
 		});
 	} catch (error) {

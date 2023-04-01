@@ -36,7 +36,7 @@ exports.register = async (req, res, next) => {
 		if (existingUser) {
 			return res.status(409).json({
 				status: 'fail',
-				showableMessage: 'User with this email already exists',
+				showableMessage: '이 이메일을 사용하는 사용자가 이미 존재합니다.',
 			});
 		}
 
@@ -75,7 +75,7 @@ exports.register = async (req, res, next) => {
 		console.error('Error in register:', error);
 		return res
 			.status(500)
-			.json({ status: 'fail', showableMessage: 'Internal server error' });
+			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
 	}
 };
 
@@ -115,7 +115,7 @@ exports.login = async (req, res, next) => {
 	} catch (error) {
 		return res
 			.status(500)
-			.json({ status: 'fail', showableMessage: 'Internal server error' });
+			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
 	}
 };
 exports.updateWalletAddress = async (req, res, next) => {
@@ -212,14 +212,14 @@ exports.getUserInfo = async (req, res) => {
 			return res.status(404).json({
 				status: 'fail',
 				message: 'User not found',
-				showableMessage: 'User not found.',
+				showableMessage: '사용자를 찾을 수 없음',
 			});
 		}
 
 		res.status(200).json({
 			status: 'success',
 			message: 'User information retrieved successfully',
-			showableMessage: 'User information has been retrieved.',
+			showableMessage: '사용자 정보가 검색되었습니다.',
 			user,
 		});
 	} catch (error) {
@@ -228,7 +228,7 @@ exports.getUserInfo = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while retrieving user information',
 			showableMessage:
-				'An error occurred while fetching user information. Please try again.',
+				'사용자 정보를 가져오는 중에 오류가 발생했습니다. 다시 시도해 주세요',
 			error,
 		});
 	}
@@ -255,7 +255,7 @@ exports.getUserIdByEmail = async (req, res) => {
 		console.error('Error in getUserIdByEmail:', error);
 		return res.status(500).json({
 			status: 'fail',
-			showableMessage: 'Internal server error',
+			showableMessage: '인터넷 서버 오류',
 		});
 	}
 };
