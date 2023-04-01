@@ -68,7 +68,7 @@ const buyToken = async (req, res) => {
 				return res.status(404).json({
 					status: 'fail',
 					message: 'Referring user not found',
-					showableMessage: 'The referral code provided is not valid.',
+					showableMessage: '추천 코드가 유효하지 않습니다.',
 				});
 			}
 
@@ -112,7 +112,7 @@ const getUserPurchaseHistory = async (req, res) => {
 			return res.status(404).json({
 				status: 'fail',
 				message: 'User purchase history not found',
-				showableMessage: 'No purchase history found for this user.',
+				showableMessage: '이 사용자의 구매 내역이 없습니다.',
 			});
 		}
 
@@ -128,7 +128,7 @@ const getUserPurchaseHistory = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while retrieving user purchase history',
 			showableMessage:
-				'An error occurred while fetching user purchase history. Please try again.',
+				'사용자 구매 내역을 가져오는 중에 오류가 발생했습니다. 다시 시도해 주세요.',
 			error,
 		});
 	}
@@ -146,14 +146,14 @@ const getReferralCashRewards = async (req, res) => {
 			return res.status(404).json({
 				status: 'fail',
 				message: 'Referral cash rewards not found',
-				showableMessage: 'No referral cash rewards found for this user.',
+				showableMessage: '이 사용자에 대한 추천 보상이 없습니다.',
 			});
 		}
 
 		res.status(200).json({
 			status: 'success',
 			message: 'Referral cash rewards retrieved successfully',
-			showableMessage: 'User referral cash rewards have been retrieved.',
+			showableMessage: '사용자 추천 현금 보상이 검색되었습니다.',
 			referralCashRewards,
 		});
 	} catch (error) {
@@ -162,7 +162,7 @@ const getReferralCashRewards = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while retrieving referral cash rewards',
 			showableMessage:
-				'An error occurred while fetching referral cash rewards. Please try again.',
+				'추천 보상을 가져오는 동안 오류가 발생했습니다. 다시 시도해 주세요.',
 			error,
 		});
 	}
@@ -179,7 +179,7 @@ const getTokenPurchaseSummary = async (req, res) => {
 			return res.status(404).json({
 				status: 'fail',
 				message: 'User purchase history not found',
-				showableMessage: 'No purchase history found for this user.',
+				showableMessage: '이 사용자에 대한 구매 내역이 없습니다.',
 			});
 		}
 
@@ -210,7 +210,7 @@ const getTokenPurchaseSummary = async (req, res) => {
 		res.status(200).json({
 			status: 'success',
 			message: 'User purchase summary retrieved successfully',
-			showableMessage: 'User purchase summary has been retrieved.',
+			showableMessage: '사용자 구매 요약이 검색되었습니다.',
 			totalPurchasedToken,
 			totalUnLockupTokens,
 			availableToWithdraw,
@@ -222,7 +222,7 @@ const getTokenPurchaseSummary = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while retrieving user purchase summary',
 			showableMessage:
-				'An error occurred while fetching user purchase summary. Please try again.',
+				'사용자 구매 요약을 가져오는 중에 오류가 발생했습니다. 다시 시도하십시오.',
 			error,
 		});
 	}
@@ -269,7 +269,7 @@ const getReferralRewardSummary = async (req, res) => {
 		res.status(200).json({
 			status: 'success',
 			message: 'Referral reward summary retrieved successfully',
-			showableMessage: 'Referral reward summary has been retrieved.',
+			showableMessage: '추천 보상 요약이 검색되었습니다.',
 			rewardSummary,
 		});
 	} catch (error) {
@@ -278,7 +278,7 @@ const getReferralRewardSummary = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while retrieving referral reward summary',
 			showableMessage:
-				'An error occurred while fetching the referral reward summary. Please try again.',
+				'추천 보상 요약을 가져오는 중에 오류가 발생했습니다. 다시 시도해 주세요.',
 			error,
 		});
 	}
@@ -291,7 +291,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this ID does not exist',
+				showableMessage: '이 ID를 가진 사용자가 존재하지 않습니다',
 			});
 		}
 
@@ -304,7 +304,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		if (!otp || otp.expiresAt < new Date()) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Invalid or expired  code',
+				showableMessage: '유효하지 않거나 만료된 코드',
 			});
 		}
 
@@ -315,7 +315,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		if (!purchaseHistory) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'Purchase history with this ID does not exist',
+				showableMessage: '이 ID의 구매 내역이 존재하지 않습니다.',
 			});
 		}
 
@@ -323,7 +323,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		if (purchaseHistory.status !== 2) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Purchase history status must be unlocked',
+				showableMessage: '구매 내역 상태가 잠금 해제되어야 합니다',
 			});
 		}
 
@@ -334,7 +334,7 @@ const withdrawPurchasedToken = async (req, res, next) => {
 		// Respond with success message
 		return res.json({
 			status: 'success',
-			showableMessage: 'Token purchase history withdrawn successfully',
+			showableMessage: '토큰 출금 성공 ',
 		});
 	} catch (error) {
 		return next(error);
@@ -349,7 +349,7 @@ const withdrawReward = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this ID does not exist',
+				showableMessage: '이 ID를 가진 사용자가 존재하지 않습니다',
 			});
 		}
 
@@ -360,15 +360,14 @@ const withdrawReward = async (req, res) => {
 		if (!referralCashReward) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'Referral cash reward with this ID does not exist',
+				showableMessage: '이 ID의 추천 보상이 존재하지 않습니다.',
 			});
 		}
-
 		// Check if referral cash reward status is 2
 		if (referralCashReward.status !== 2) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Referral cash reward cannot be withdrawn',
+				showableMessage: '추천인  보상 출금이 불가합니다',
 			});
 		}
 
@@ -382,7 +381,7 @@ const withdrawReward = async (req, res) => {
 		if (!opt || opt.expiresAt < new Date()) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Invalid or expired  code',
+				showableMessage: '잘못되었거나 만료된 코드',
 			});
 		}
 
@@ -393,7 +392,7 @@ const withdrawReward = async (req, res) => {
 		// Respond with success message
 		return res.json({
 			status: 'success',
-			showableMessage: 'Referral cash reward has been withdrawn',
+			showableMessage: '추천인 현금 보상 출금완료',
 		});
 	} catch (error) {
 		console.error(error);
@@ -401,7 +400,7 @@ const withdrawReward = async (req, res) => {
 			status: 'fail',
 			message: 'An error occurred while withdrawing referral cash reward',
 			showableMessage:
-				'An error occurred while withdrawing referral cash reward. Please try again.',
+				'추천인 리워드 출금 중 오류가 발생했습니다. 다시 시도해 주세요.',
 			error,
 		});
 	}

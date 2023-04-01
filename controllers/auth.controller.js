@@ -69,7 +69,7 @@ exports.register = async (req, res, next) => {
 		return res.status(201).json({
 			status: 'success',
 			data: { token, user: { id: newUser._id, email: newUser.email } },
-			showableMessage: 'User registered successfully',
+			showableMessage: '회원가입 성공',
 		});
 	} catch (error) {
 		console.error('Error in register:', error);
@@ -88,7 +88,7 @@ exports.login = async (req, res, next) => {
 		if (!user) {
 			return res.status(401).json({
 				status: 'fail',
-				showableMessage: 'Invalid email or password',
+				showableMessage: '잘못된 이메일 또는 비밀번호',
 			});
 		}
 
@@ -97,7 +97,7 @@ exports.login = async (req, res, next) => {
 		if (!isPasswordCorrect) {
 			return res.status(401).json({
 				status: 'fail',
-				showableMessage: 'Invalid email or password',
+				showableMessage: '잘못된 이메일 또는 비밀번호',
 			});
 		}
 
@@ -110,10 +110,9 @@ exports.login = async (req, res, next) => {
 		return res.json({
 			status: 'success',
 			data: { token, user: { id: user._id, email: user.email } },
-			showableMessage: 'Logged in successfully',
+			showableMessage: '로그인 성공',
 		});
 	} catch (error) {
-		console.error('Error in register:', error);
 		return res
 			.status(500)
 			.json({ status: 'fail', showableMessage: 'Internal server error' });
@@ -128,7 +127,7 @@ exports.updateWalletAddress = async (req, res, next) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this ID does not exist',
+				showableMessage: '이 ID를 가진 사용자가 존재하지 않습니다',
 			});
 		}
 
@@ -141,7 +140,7 @@ exports.updateWalletAddress = async (req, res, next) => {
 		if (!opt || opt.expiresAt < new Date()) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'Invalid or expired reset code',
+				showableMessage: '유효하지 않거나 만료된  코드',
 			});
 		}
 
@@ -152,7 +151,7 @@ exports.updateWalletAddress = async (req, res, next) => {
 		// Respond with success message
 		return res.json({
 			status: 'success',
-			showableMessage: 'Wallet address updated successfully',
+			showableMessage: '지갑 주소가 성공적으로 업데이트되었습니다.',
 		});
 	} catch (error) {
 		return next(error);
@@ -168,7 +167,7 @@ exports.updateUserDetails = async (req, res, next) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User with this ID does not exist',
+				showableMessage: '이 ID를 가진 사용자가 존재하지 않습니다',
 			});
 		}
 
@@ -182,7 +181,7 @@ exports.updateUserDetails = async (req, res, next) => {
 			if (existingUser && existingUser._id.toString() !== user_id) {
 				return res.status(400).json({
 					status: 'fail',
-					showableMessage: 'Email is already in use',
+					showableMessage: '이메일이 이미 사용 중입니다.',
 				});
 			}
 			user.email = email;
@@ -196,7 +195,7 @@ exports.updateUserDetails = async (req, res, next) => {
 		// Respond with success message
 		return res.json({
 			status: 'success',
-			showableMessage: 'User details updated successfully',
+			showableMessage: '사용자 정보 업데이트 성공',
 		});
 	} catch (error) {
 		return next(error);
@@ -243,14 +242,14 @@ exports.getUserIdByEmail = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({
 				status: 'fail',
-				showableMessage: 'User not found',
+				showableMessage: '사용자가 없습니다',
 			});
 		}
 
 		return res.status(200).json({
 			status: 'success',
 			data: { userId: user._id },
-			showableMessage: 'User found successfully',
+			showableMessage: '사용자 발견',
 		});
 	} catch (error) {
 		console.error('Error in getUserIdByEmail:', error);
