@@ -98,7 +98,7 @@ exports.register = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res) => {
 	try {
-		const { page = 1, limit = 10, name } = req.body;
+		const { page, limit, name } = req.body;
 
 		let filter = {};
 		if (name) {
@@ -188,6 +188,7 @@ exports.getAllUserPurchaseHistory = async (req, res) => {
 
 		const count = await UserPurchaseHistory.countDocuments(query);
 		const userPurchaseHistory = await UserPurchaseHistory.find(query)
+			.populate('user_id', '-_id fullName walletAddress')
 			.skip((page - 1) * limit)
 			.limit(parseInt(limit))
 			.lean();
@@ -223,6 +224,7 @@ exports.getAllReferralCashRewardHistory = async (req, res) => {
 
 		const count = await ReferralCashReward.countDocuments(query);
 		const referralCashReward = await ReferralCashReward.find(query)
+			.populate('referredTo', '-_id fullName walletAddress')
 			.skip((page - 1) * limit)
 			.limit(parseInt(limit))
 			.lean();
