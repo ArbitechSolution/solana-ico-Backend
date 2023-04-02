@@ -128,7 +128,7 @@ exports.getAllUsers = async (req, res) => {
 			for (let history of purchaseHistory) {
 				totalPurchasedCoin += history.coinAmount;
 
-				if (history.status === 2) {
+				if (history.status === 1) {
 					totalLockedPurchasedCoin += history.coinAmount;
 				}
 			}
@@ -140,7 +140,7 @@ exports.getAllUsers = async (req, res) => {
 			for (let history of referralCashReward) {
 				totalRewardCoin += history.myReward;
 
-				if (history.status === 2) {
+				if (history.status === 1) {
 					totalLockedRewardCoin += history.myReward;
 				}
 			}

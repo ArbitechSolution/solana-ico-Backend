@@ -21,7 +21,7 @@ const getRoaCorePriceInKRW = async () => {
 		const roaCorePriceInKRW = roaCoreData.quote.KRW.price;
 
 		// Apply a 30% discount to the live price
-		const discountedPrice = roaCorePriceInKRW * 0.7;
+		const discountedPrice = roaCorePriceInKRW * 0.8;
 
 		console.log(`ROA Core price in KRW with 30% discount: ${discountedPrice}`);
 		return discountedPrice;
@@ -184,8 +184,8 @@ const getTokenPurchaseSummary = async (req, res) => {
 
 		// Initialize the required data
 		let totalPurchasedToken = 0;
-		let totalUnLockupTokens = 0;
-		let availableToWithdraw = 0;
+		let totalLockupTokens = 0;
+		let totalUnLockupQuantity = 0;
 		let totalDepositPending = 0;
 
 		// Calculate the required data
@@ -195,15 +195,13 @@ const getTokenPurchaseSummary = async (req, res) => {
 					totalDepositPending += history.coinAmount;
 					break;
 				case 1:
-					totalUnLockupTokens += history.coinAmount;
+					totalLockupTokens += history.coinAmount;
 					break;
 				case 2:
-					availableToWithdraw += history.coinAmount;
-					break;
-				case 3:
-					totalPurchasedToken += history.coinAmount;
+					totalUnLockupQuantity += history.coinAmount;
 					break;
 			}
+			totalPurchasedToken += history.coinAmount;
 		});
 
 		res.status(200).json({
@@ -211,8 +209,8 @@ const getTokenPurchaseSummary = async (req, res) => {
 			message: 'User purchase summary retrieved successfully',
 			showableMessage: '사용자 구매 요약이 검색되었습니다.',
 			totalPurchasedToken,
-			totalUnLockupTokens,
-			availableToWithdraw,
+			totalLockupTokens,
+			totalUnLockupQuantity,
 			totalDepositPending,
 		});
 	} catch (error) {
@@ -242,10 +240,10 @@ const getReferralRewardSummary = async (req, res) => {
 		]);
 
 		const rewardSummary = {
-			totalPendingReward: 0,
-			totalUnLockupQuantity: 0,
-			availableReward: 0,
 			totalRewardReceived: 0,
+			totalLockupQuantity: 0,
+			totalUnLockupQuantity: 0,
+			totalPendingReward: 0,
 		};
 
 		referralRewards.forEach((reward) => {
@@ -254,15 +252,13 @@ const getReferralRewardSummary = async (req, res) => {
 					rewardSummary.totalPendingReward = reward.totalReward;
 					break;
 				case 1:
-					rewardSummary.totalUnLockupQuantity = reward.totalReward;
+					rewardSummary.totalLockupQuantity = reward.totalReward;
 					break;
 				case 2:
-					rewardSummary.availableReward = reward.totalReward;
-					break;
-				case 3:
-					rewardSummary.totalRewardReceived = reward.totalReward;
+					rewardSummary.totalUnLockupQuantity = reward.totalReward;
 					break;
 			}
+			rewardSummary.totalRewardReceived += reward.totalReward;
 		});
 
 		res.status(200).json({
