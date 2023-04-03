@@ -43,6 +43,13 @@ const getPrice = async (req, res) => {
 const buyToken = async (req, res) => {
 	try {
 		const { amountsOfWon, refCode, user_id } = req.body;
+		if (!refCode) {
+			return res.json({
+				status: 'fail',
+				message: 'RefCode is must',
+				showableMessage: '추천인 코드를 입력하세요',
+			});
+		}
 		const priceOfOneTokenInKRW = await getRoaCorePriceInKRW();
 		const coinAmount = amountsOfWon / priceOfOneTokenInKRW;
 		// Create and save UserPurchaseHistory
@@ -55,33 +62,30 @@ const buyToken = async (req, res) => {
 		await userPurchaseHistory.save();
 
 		let referralCashReward;
+		// Calculate referral reward (10% of amountsOfWon)
+		const referralReward = coinAmount * 0.1;
 
-		if (refCode) {
-			// Calculate referral reward (10% of amountsOfWon)
-			const referralReward = coinAmount * 0.1;
+		// Find the user with the given refCode
+		const referringUser = await User.findOne({ refCode });
 
-			// Find the user with the given refCode
-			const referringUser = await User.findOne({ refCode });
-
-			// Check if referring user exists
-			if (!referringUser) {
-				return res.status(404).json({
-					status: 'fail',
-					message: 'Referring user not found',
-					showableMessage: '추천 코드가 유효하지 않습니다.',
-				});
-			}
-
-			// Create and save ReferralCashReward
-			referralCashReward = new ReferralCashReward({
-				user_id: referringUser._id,
-				referredTo: user_id,
-				depositedWon: amountsOfWon,
-				myReward: referralReward,
-				status: 0,
+		// Check if referring user exists
+		if (!referringUser) {
+			return res.status(404).json({
+				status: 'fail',
+				message: 'Referring user not found',
+				showableMessage: '추천 코드가 유효하지 않습니다.',
 			});
-			await referralCashReward.save();
 		}
+
+		// Create and save ReferralCashReward
+		referralCashReward = new ReferralCashReward({
+			user_id: referringUser._id,
+			referredTo: user_id,
+			depositedWon: amountsOfWon,
+			myReward: referralReward,
+			status: 0,
+		});
+		await referralCashReward.save();
 
 		res.status(201).json({
 			status: 'success',
