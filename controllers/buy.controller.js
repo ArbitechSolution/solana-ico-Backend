@@ -46,7 +46,7 @@ const buyToken = async (req, res) => {
 		if (!refCode || refCode == '' || refCode == null || refCode == undefined) {
 			return res.json({
 				status: 'fail',
-				message: 'RefCode is must',
+				message: 'RefCode is required',
 				showableMessage: '추천인 코드를 입력하세요',
 			});
 		}
