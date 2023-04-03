@@ -15,6 +15,8 @@ router.all('/changePassword', adminController.changePassword);
 
 router.all('/changeAdminDetails', adminController.changeAdminDetails);
 
+router.all('/getAdminDetails/:user_id', adminController.getAdminDetails);
+
 router.all(
 	'/getAllUserPurchaseHistory',
 	adminController.getAllUserPurchaseHistory
