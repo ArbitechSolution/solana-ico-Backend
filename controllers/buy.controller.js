@@ -43,7 +43,7 @@ const getPrice = async (req, res) => {
 const buyToken = async (req, res) => {
 	try {
 		const { amountsOfWon, refCode, user_id } = req.body;
-		if (!refCode) {
+		if (!refCode || refCode == '' || refCode == null || refCode == undefined) {
 			return res.json({
 				status: 'fail',
 				message: 'RefCode is must',
