@@ -395,7 +395,7 @@ exports.changeAdminDetails = async (req, res, next) => {
 		if (email) {
 			// Check if email is already taken
 			const existingAdmin = await Admin.findOne({ email });
-			if (existingAdmin && existingAdmin._id.toString() !== userId) {
+			if (existingAdmin && existingAdmin._id.toString() !== user_id) {
 				return res.status(409).json({
 					status: 'fail',
 					showableMessage: '이 이메일을 사용하는 관리자가 이미 존재합니다.',
