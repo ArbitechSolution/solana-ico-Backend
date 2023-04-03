@@ -11,6 +11,10 @@ router.all('/login', adminController.login);
 
 router.all('/getAllUsers', adminController.getAllUsers);
 
+router.all('/changePassword', adminController.changePassword);
+
+router.all('/changeAdminDetails', adminController.changeAdminDetails);
+
 router.all(
 	'/getAllUserPurchaseHistory',
 	adminController.getAllUserPurchaseHistory
