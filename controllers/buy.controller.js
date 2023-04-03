@@ -43,13 +43,19 @@ const getPrice = async (req, res) => {
 const buyToken = async (req, res) => {
 	try {
 		const { amountsOfWon, refCode, user_id } = req.body;
-		if (!refCode || refCode == '' || refCode == null || refCode == undefined) {
+		if (
+			!refCode ||
+			refCode === '' ||
+			refCode === null ||
+			refCode === undefined
+		) {
 			return res.json({
 				status: 'fail',
 				message: 'RefCode is required',
 				showableMessage: '추천인 코드를 입력하세요',
 			});
 		}
+
 		const priceOfOneTokenInKRW = await getRoaCorePriceInKRW();
 		const coinAmount = amountsOfWon / priceOfOneTokenInKRW;
 		// Create and save UserPurchaseHistory
