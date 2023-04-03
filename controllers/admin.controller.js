@@ -424,3 +424,28 @@ exports.changeAdminDetails = async (req, res, next) => {
 			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
 	}
 };
+exports.getAdminDetails = async (req, res, next) => {
+	try {
+		const { user_id } = req.params;
+
+		const admin = await Admin.findById(user_id).select('-password');
+		if (!admin) {
+			return res
+				.status(404)
+				.json({ status: 'fail', showableMessage: '관리자를 찾을 수 없음' });
+		}
+
+		return res.status(200).json({
+			status: 'success',
+			data: {
+				admin: { id: admin._id, fullName: admin.fullName, email: admin.email },
+			},
+			showableMessage: '관리자 세부정보를 성공적으로 반환하였습니다.',
+		});
+	} catch (error) {
+		console.error('Error in getAdminDetails:', error);
+		return res
+			.status(500)
+			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
+	}
+};
