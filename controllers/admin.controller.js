@@ -734,7 +734,7 @@ exports.changePassword = async (req, res, next) => {
 		if (newPassword !== confirmNewPassword) {
 			return res.status(400).json({
 				status: 'fail',
-				showableMessage: 'New passwords do not match',
+				showableMessage: '새 비밀번호가 일치하지 않습니다',
 			});
 		}
 
@@ -743,16 +743,17 @@ exports.changePassword = async (req, res, next) => {
 		if (!admin) {
 			return res
 				.status(404)
-				.json({ status: 'fail', showableMessage: 'Admin not found' });
+				.json({ status: 'fail', showableMessage: '관리자를 찾을 수 없음' });
 		}
 		const oldPasswordMatches = await bcrypt.compare(
 			oldPassword,
 			admin.password
 		);
 		if (!oldPasswordMatches) {
-			return res
-				.status(401)
-				.json({ status: 'fail', showableMessage: 'Old password is incorrect' });
+			return res.status(401).json({
+				status: 'fail',
+				showableMessage: '이전 암호가 올바르지 않습니다',
+			});
 		}
 
 		// Hash the new password
@@ -766,13 +767,13 @@ exports.changePassword = async (req, res, next) => {
 		// Respond with success message
 		return res.status(200).json({
 			status: 'success',
-			showableMessage: 'Password changed successfully',
+			showableMessage: '비밀번호가 성공적으로 변경되었습니다.',
 		});
 	} catch (error) {
 		console.error('Error in changePassword:', error);
 		return res
 			.status(500)
-			.json({ status: 'fail', showableMessage: 'Internal server error' });
+			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
 	}
 };
 exports.changeAdminDetails = async (req, res, next) => {
@@ -783,7 +784,7 @@ exports.changeAdminDetails = async (req, res, next) => {
 		if (!admin) {
 			return res
 				.status(404)
-				.json({ status: 'fail', showableMessage: 'Admin not found' });
+				.json({ status: 'fail', showableMessage: '관리자를 찾을 수 없음' });
 		}
 
 		if (email) {
@@ -792,7 +793,7 @@ exports.changeAdminDetails = async (req, res, next) => {
 			if (existingAdmin && existingAdmin._id.toString() !== userId) {
 				return res.status(409).json({
 					status: 'fail',
-					showableMessage: 'Admin with this email already exists',
+					showableMessage: '이 이메일을 사용하는 관리자가 이미 존재합니다.',
 				});
 			}
 			admin.email = email;
@@ -809,12 +810,12 @@ exports.changeAdminDetails = async (req, res, next) => {
 			data: {
 				admin: { id: admin._id, fullName: admin.fullName, email: admin.email },
 			},
-			showableMessage: 'Admin details changed successfully',
+			showableMessage: '관리자 세부정보가 성공적으로 변경되었습니다.',
 		});
 	} catch (error) {
 		console.error('Error in changeAdminDetails:', error);
 		return res
 			.status(500)
-			.json({ status: 'fail', showableMessage: 'Internal server error' });
+			.json({ status: 'fail', showableMessage: '인터넷 서버 오류' });
 	}
 };
