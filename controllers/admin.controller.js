@@ -322,13 +322,13 @@ exports.updateReferralCashRewardStatus = async (req, res) => {
 		return res.json({
 			status: 'success',
 			data: referralCashReward,
-			showableMessage: 'Referral cash reward status updated successfully',
+			showableMessage: '추천 현금 보상 상태가 성공적으로 업데이트되었습니다.',
 		});
 	} catch (error) {
 		console.error('Error in updateReferralCashRewardStatus:', error);
 		return res
 			.status(500)
-			.json({ status: 'fail', showableMessage: 'Internal server error' });
+			.json({ status: 'fail', showableMessage: '추천 현금 보상 상태가 성공으로 업데이트되었습니다.' });
 	}
 };
 exports.changePassword = async (req, res, next) => {
