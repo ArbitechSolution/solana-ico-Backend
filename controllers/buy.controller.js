@@ -69,7 +69,7 @@ const buyToken = async (req, res) => {
 
 		let referralCashReward;
 		// Calculate referral reward (10% of amountsOfWon)
-		const referralReward = coinAmount * 0.1;
+		const referralReward = amountsOfWon * 0.1;
 
 		// Find the user with the given refCode
 		const referringUser = await User.findOne({ refCode });
